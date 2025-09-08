@@ -10,6 +10,7 @@ public with sharing class AnalyticsDemoDataflowHelper {
         Map<String, Object> dataflowDefinitionObject = AnalyticsDemoDataflowHelper.dataflowContentsAsJSON(dataflowID);
 
         // Determine which should process generic and which direct replacement
+        // Vinod added a comment on Line 13
         List<WaveApplicationEdgemart> genericReplacements = new List<WaveApplicationEdgemart>();
         List<WaveApplicationEdgemart> directReplacements = new List<WaveApplicationEdgemart>();
         
