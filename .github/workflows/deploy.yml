@@ -1,1 +1,37 @@
-.github/workflows/main.yml
+name: Deploy to Salesforce Sandbox
+
+on:
+  push:
+    branches:
+      - ReleaseBranch  # Change to the branch you want
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Install Salesforce CLI
+        run: npm install --global sfdx-cli
+
+      - name: Write server.key file
+        run: echo "${{ secrets.SF_JWT_KEY }}" > server.key
+
+      - name: Authenticate with JWT
+        run: |
+          sfdx auth:jwt:grant \
+            --clientid ${{ secrets.SF_CLIENT_ID }} \
+            --jwtkeyfile server.key \
+            --username ${{ secrets.SF_USERNAME }} \
+            --instanceurl https://test.salesforce.com \
+            --setalias test-org
+
+      - name: Deploy to Sandbox
+        run: |
+          sfdx force:source:deploy \
+            -p force-app \
+            -u test-org \
+            --wait 10 \
+            --testlevel NoTestRun
