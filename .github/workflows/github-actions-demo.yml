@@ -1,4 +1,4 @@
-            - name: sfdx-orgdev-build-deploy
+name: sfdx-orgdev-build-deploy
   # You may pin to the exact commit or the version.
   # uses: tiagonnascimento/sfdx-orgdev-build-deploy@b3fd99b9db7799fe250994388bb6ecf1b719b1ff
   uses: tiagonnascimento/sfdx-orgdev-build-deploy@v2.1.1
