@@ -1,0 +1,2 @@
+- name: sfdx-orgdev-build-deploy
+  uses: tiagonnascimento/sfdx-orgdev-build-deploy@v2.1.1
