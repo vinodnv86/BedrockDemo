@@ -1,13 +1,35 @@
-name: GitHub Actions Demo
-run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
-on: [push]
+name: Deploy to Salesforce on PR
+
+on:
+  pull_request:
+    branches: [ main ] # or any target branch
+
 jobs:
-  Explore-GitHub-Actions:
+  deploy:
     runs-on: ubuntu-latest
+
     steps:
-      - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
-      - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!
-   
- - run: 
-    using: "node12"
-    main: 'index.js'
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Set up Node
+      uses: actions/setup-node@v4
+      with:
+        node-version: 20
+
+    - name: Install Salesforce CLI
+      run: |
+        npm install sfdx-cli --global
+
+    - name: Authenticate with JWT
+      run: |
+        echo "${{ secrets.JWT_KEY }}" > server.key
+        sfdx auth:jwt:grant --clientid ${{ secrets.CONSUMER_KEY }} --jwtkeyfile server.key --username ${{ secrets.SF_USERNAME }} --instanceurl ${{ secrets.SF_SERVER_URL }}
+      shell: bash
+
+    - name: Display Org Details (optional)
+      run: sfdx force:org:display --targetusername ${{ secrets.SF_USERNAME }}
+
+    - name: Validate deployment (check only)
+      run: |
+        sfdx force:source:deploy -p force-app -u ${{ secrets.SF_USERNAME }} --checkonly --testlevel RunLocalTests --json
