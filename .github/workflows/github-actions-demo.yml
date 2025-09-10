@@ -1,8 +1,9 @@
-name: Deploy to Salesforce on PR
+name: Deploy to Salesforce on PR (Username-Password)
 
 on:
   pull_request:
-    branches: [main] # or any target branch
+    branches:
+      - main  # or your main deployment branch
 
 jobs:
   deploy:
@@ -18,18 +19,27 @@ jobs:
         node-version: 20
 
     - name: Install Salesforce CLI
-      run: |
-        npm install sfdx-cli --global
+      run: npm install --global sfdx-cli
 
-    - name: Authenticate with JWT
+    - name: Authenticate to Salesforce (Username-Password)
       run: |
-        echo "${{ secrets.JWT_KEY }}" > server.key
-        sfdx auth:jwt:grant --clientid ${{ secrets.CONSUMER_KEY }} --jwtkeyfile server.key --username ${{ secrets.SF_USERNAME }} --instanceurl ${{ secrets.SF_SERVER_URL }}
-      shell: bash
+        sfdx auth:web:login --setalias MyOrgAlias || echo "Skipping web login for automation"
+        sfdx force:auth:password:login \
+          --clientid ${{ secrets.CONSUMER_KEY }} \
+          --clientsecret ${{ secrets.CONSUMER_SECRET }} \
+          --username ${{ secrets.SF_USERNAME }} \
+          --password ${{ secrets.SF_PASSWORD }} \
+          --instanceurl ${{ secrets.SF_SERVER_URL }} \
+          --setalias githubOrg \
+          --setdefaultusername
 
-    - name: Display Org Details (optional)
-      run: sfdx force:org:display --targetusername ${{ secrets.SF_USERNAME }}
+    - name: Display Org Info (optional debug)
+      run: sfdx force:org:display
 
-    - name: Validate deployment (check only)
+    - name: Validate Deployment (Check Only)
       run: |
-        sfdx force:source:deploy -p force-app -u ${{ secrets.SF_USERNAME }} --checkonly --testlevel RunLocalTests --json
+        sfdx force:source:deploy -p force-app \
+          --checkonly \
+          --testlevel RunLocalTests \
+          --targetusername githubOrg \
+          --json
