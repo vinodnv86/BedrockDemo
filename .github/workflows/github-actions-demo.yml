@@ -2,33 +2,72 @@ name: sfdx-orgdev-build-deploy
   # You may pin to the exact commit or the version.
   # uses: tiagonnascimento/sfdx-orgdev-build-deploy@b3fd99b9db7799fe250994388bb6ecf1b719b1ff
  
-  with:
-    # Type of deployment, could be one of the two: production or sandbox (default)
-    type: # default is sandbox
-    # Path for the encrypted certificate to be used on force:auth:jwt:grant
-    certificate_path: 
-    # Decryption key to be used to decrypt the certificate
-    decryption_key: 
-    # Decryption IV to be used to decrypt the certificate
-    decryption_iv: 
-    # Client ID / Consumer Key of a connected app to the target destination
-    client_id: 
-    # Username to be used to connect in the target org
-    username: 
-    # Boolean (true/false) that will indicate whether the deploy is a checkonly deploy or not. If is a checkonly, on force:mdapi:deploy command the option -c will be appended
-    checkonly: # default is true
-    # Path on the current repository to the root folder of the sfdx project
-    sfdx_root_folder: # optional
-    # Path on the current repository (or on the root folder of the sfdx project if sfdx_root_folder is set) to one or more package.xml that represents the packages to be deployed. Based on this files the metadata package will be created and deployed in the order specified
-    manifest_path: 
-    # Specifies which tests are run as part of a deployment. Valid values are: NoTestRun, RunSpecifiedTests, RunLocalTests, RunAllTestsInOrg
-    deploy_testlevel: # default is RunLocalTests
-    # Wait time for deployment to finish in minutes. Default is 60
-    deploy_wait_time: # optional, default is 60
-    # Path for the destructive changes directory
-    destructive_path: # optional
-    # Path on the current repository to the apex script that will be used to create data required by the package
-    data_factory: # optional
-    # Default source path to look for apex classes. Only used when deploy_testlevel is RunSpecifiedTests
-    default_source_path: # optional, default is force-app/main/default
-          
+ inputs:
+    type:
+        description: 'Type of deployment, could be one of the two: production or sandbox (default)'
+        required: true
+        default: 'sandbox'
+
+    certificate_path:
+        description: 'Path for the encrypted certificate to be used on force:auth:jwt:grant'
+        required: true
+
+    decryption_key:
+        description: 'Decryption key to be used to decrypt the certificate'
+        required: true
+    
+    decryption_iv:
+        description: 'Decryption IV to be used to decrypt the certificate'
+        required: true
+    
+    client_id:  
+        description: 'Client ID / Consumer Key of a connected app to the target destination'
+        required: true
+
+    username:
+        description: 'Username to be used to connect in the target org'
+        required: true
+
+    checkonly:
+        description: 'Boolean (true/false) that will indicate whether the deploy is a checkonly deploy or not. If is a checkonly, on force:mdapi:deploy command the option -c will be appended'
+        required: true
+        default: true
+
+    sfdx_root_folder:
+        description: 'Path on the current repository to the root folder of the sfdx project'
+        required: false
+
+    manifest_path:
+        description: 'Path on the current repository (or on the root folder of the sfdx project if sfdx_root_folder is set) to one or more package.xml that represents the packages to be deployed. Based on this files the metadata package will be created and deployed in the order specified'
+        required: true
+
+    deploy_testlevel:
+        description: 'Specifies which tests are run as part of a deployment. Valid values are: NoTestRun, RunSpecifiedTests, RunLocalTests, RunAllTestsInOrg'
+        required: true
+        default: RunLocalTests
+
+    deploy_wait_time:
+        description: 'Wait time for deployment to finish in minutes. Default is 60'
+        required: false
+        default: '60'
+
+    destructive_path:
+        description: 'Path for the destructive changes directory'
+        required: false
+    
+    data_factory:
+        description: 'Path on the current repository to the apex script that will be used to create data required by the package'
+        required: false
+
+    default_source_path:
+        description: 'Default source path to look for apex classes. Only used when deploy_testlevel is RunSpecifiedTests'
+        required: false
+        default: 'force-app/main/default'
+
+runs:
+    using: 'node12'
+    main: 'index.js'
+
+branding:
+    icon: 'cloud-lightning'
+    color: 'blue'
