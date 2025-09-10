@@ -2,7 +2,7 @@ name: Deploy to Salesforce on PR
 
 on:
   pull_request:
-    branches: [ main ] # or any target branch
+    branches: [FullCopyTest] # or any target branch
 
 jobs:
   deploy:
