@@ -1,6 +1,3 @@
-name: 'sfdx-orgdev-build-deploy'
-author: Tiago Nascimento - tnascimento@salesforce.com
-description: 'Convert a Salesforce DX project into a metadata package and deploy it'
 inputs:
     type:
         description: 'Type of deployment, could be one of the two: production or sandbox (default)'
