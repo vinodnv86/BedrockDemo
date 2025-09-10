@@ -1,11 +1,3 @@
-# Unique name for this workflow
-name: On push develop - Deploy to TI01
-
-# Definition when the workflow should run
-on:
-    push:
-        branches:
-            - develop
 
 # Jobs to be executed
 jobs:
