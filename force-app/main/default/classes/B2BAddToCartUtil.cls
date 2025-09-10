@@ -7,7 +7,7 @@ public with sharing class B2BAddToCartUtil {
     /*
         Adds items to the cart in batches of 100.
         The cart adds are done synchronously.
-        Vinod Comment on Line 10 B2BAddToCartUtil
+        Vinod Comment on Line 13 B2BAddToCartUtil
     */
     public static List<B2BAddToCartUtil.ImportItem> processBatchInputItems(String webstoreId, String effectiveAccountId, String activeCartOrId, List<ConnectApi.BatchInput> batchInputList, List<B2BAddToCartUtil.ImportItem> itemsList, Map<String, Object> responseMap) {
 
