@@ -11,7 +11,7 @@ env:
   SF_USE_GENERIC_UNIX_KEYCHAIN: true
   SF_DOMAIN_RETRY: 300
   SF_DISABLE_APP_HUB: true
-  SF_LOG_LEVEL: DEBUG
+  SF_LOG_LEVEL: INFO
 
 jobs:
   validate-deployment:
