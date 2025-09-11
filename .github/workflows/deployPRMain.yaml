@@ -113,6 +113,7 @@ jobs:
           --wait 30 \
           --json)
 
+        echo "Validation whole result : $VALIDATION_RESULT"
         # Extract the 'id' field from the JSON output & Store the ID as a step output
         DEPLOY_ID=$(echo "$VALIDATION_RESULT" | jq -r '.result.id')
         echo "validation_id=$DEPLOY_ID" >> $GITHUB_OUTPUT
