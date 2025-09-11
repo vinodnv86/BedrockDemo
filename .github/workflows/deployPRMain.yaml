@@ -123,7 +123,7 @@ jobs:
       if: success() && steps.validate_step.outputs.validation_id
       run: |
         echo "Starting quick deployment using ID: ${{ steps.validate_step.outputs.validation_id }}"
-        sf project deploy quick \
+        sf project deploy pipeline quick \
           --deploy-id ${{ steps.validate_step.outputs.validation_id }} \
           --target-org target-org \
           --wait 30 \
