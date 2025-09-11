@@ -8,7 +8,7 @@ public with sharing class B2BCartUploadHelp {
         System.debug('communityId: ' + communityId);
         System.debug('contentId: ' + contentId);
         System.debug('locale: ' + locale);
-        System.debug('contentType: ' + contentType);
+        System.debug('contentType233: ' + contentType);
 
         List<String> contentIds = new List<String>();
         contentIds.add(contentId);
@@ -56,4 +56,5 @@ public with sharing class B2BCartUploadHelp {
     }
     
     
+
 }
