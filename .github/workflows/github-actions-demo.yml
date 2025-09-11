@@ -21,6 +21,11 @@ jobs:
     - name: Install Salesforce CLI
       run: npm install --global sfdx-cli
 
+    - name: Install CLI SF
+      run: |
+        curl -sSf https://developer.salesforce.com/media/salesforce-cli/sf/channels/stable/install.sh | bash
+
+
     - name: Install Salesforce CLI Legacy Plugin (needed for password:login)
       run: sfdx plugins:install salesforce-alm
 
