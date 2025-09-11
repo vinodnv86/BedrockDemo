@@ -51,10 +51,8 @@ jobs:
           --json
 
 
-    - name: 🗂 Deployment Status
-      run: sfdx force:source:deploy:report -u githubOrg
 
-      - name: 🚀 Deploy Metadata to Salesforce (real deploy)
+    - name: Deploy Metadata
       run: |
         echo "🚀 Deploying using sf CLI..."
         sf project deploy start \
