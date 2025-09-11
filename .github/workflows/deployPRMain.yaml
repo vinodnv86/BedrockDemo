@@ -118,8 +118,8 @@ jobs:
         echo "validation_id=$DEPLOY_ID" >> $GITHUB_OUTPUT
         echo "Validation ID: $DEPLOY_ID"
 
-         - name: Set DevOps Center target org
-        run: sf config set target-devops-center target-org
+     #    - name: Set DevOps Center target org
+     #   run: sf config set target-devops-center target-org
       
     # Quick Deploy using Validation ID
     - name: Deploy to Target Org
