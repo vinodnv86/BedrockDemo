@@ -24,6 +24,10 @@ jobs:
     - name: Install Salesforce CLI Legacy Plugin (needed for password:login)
       run: sfdx plugins:install salesforce-alm
 
+    - name: 📦 Checkout code
+      uses: actions/checkout@v4
+
+
     - name: Authenticate to Salesforce (Username-Password)
       run: |
         sfdx force:auth:password:login \
@@ -50,10 +54,14 @@ jobs:
     - name: 🗂 Deployment Status
       run: sfdx force:source:deploy:report -u githubOrg
 
-    - name: 🚀 Real Deployment (optional - remove checkonly)
-     
+      - name: 🚀 Deploy Metadata to Salesforce (real deploy)
       run: |
-        echo "🚀 Performing real deployment (not checkonly)..."
-        sfdx force:source:deploy -p force-app \
-          --testlevel RunLocalTests \
-          --targetusername githubOrg
+        echo "🚀 Deploying using sf CLI..."
+        sf project deploy start \
+          --source-dir force-app \
+          --target-org githubOrg \
+          --test-level RunLocalTests \
+          --wait 10
+
+    - name: ✅ Show Deployment Status
+      run: sf deploy report --target-org githubOrg
