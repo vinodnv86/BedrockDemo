@@ -3,17 +3,17 @@ name: Deploy to Salesforce on PR (Username-Password)
 on:
   pull_request:
     branches:
-      - main  # or your main deployment branch
+      - main
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository
+    - name: Checkout code
       uses: actions/checkout@v4
 
-    - name: Set up Node
+    - name: Set up Node.js
       uses: actions/setup-node@v4
       with:
         node-version: 20
@@ -21,22 +21,21 @@ jobs:
     - name: Install Salesforce CLI
       run: npm install --global sfdx-cli
 
-    - name: Authenticate to Salesforce (Username-Password)
+    - name: Authenticate to Salesforce
       run: |
-        sfdx auth:web:login --setalias MyOrgAlias || echo "Skipping web login for automation"
         sfdx force:auth:password:login \
           --clientid ${{ secrets.CONSUMER_KEY }} \
-          --clientsecret ${{ secrets.CONSUMER_SECRET }} \
           --username ${{ secrets.SF_USERNAME }} \
           --password ${{ secrets.SF_PASSWORD }} \
           --instanceurl ${{ secrets.SF_SERVER_URL }} \
           --setalias githubOrg \
           --setdefaultusername
+      shell: bash
 
-    - name: Display Org Info (optional debug)
-      run: sfdx force:org:display
+    - name: Display Org Info
+      run: sfdx force:org:display -u githubOrg
 
-    - name: Validate Deployment (Check Only)
+    - name: Validate Deployment (check only)
       run: |
         sfdx force:source:deploy -p force-app \
           --checkonly \
