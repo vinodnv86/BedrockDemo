@@ -23,10 +23,12 @@ jobs:
 
     - name: Install Salesforce CLI Legacy Plugin (needed for password:login)
       run: sfdx plugins:install salesforce-alm
+     
 
     - name: 📦 Checkout code
       uses: actions/checkout@v4
-
+    - name: 🧰 Set up Salesforce CLI
+      uses: salesforcecli/github-action@v1
 
     - name: Authenticate to Salesforce (Username-Password)
       run: |
