@@ -21,7 +21,10 @@ jobs:
     - name: Install Salesforce CLI
       run: npm install --global sfdx-cli
 
-    - name: Authenticate to Salesforce
+    - name: Install Salesforce CLI Legacy Plugin (needed for password:login)
+      run: sfdx plugins:install salesforce-alm
+
+    - name: Authenticate to Salesforce (Username-Password)
       run: |
         sfdx force:auth:password:login \
           --clientid ${{ secrets.CONSUMER_KEY }} \
@@ -32,7 +35,7 @@ jobs:
           --setdefaultusername
       shell: bash
 
-    - name: Display Org Info
+    - name: Display Org Info (debug)
       run: sfdx force:org:display -u githubOrg
 
     - name: Validate Deployment (check only)
