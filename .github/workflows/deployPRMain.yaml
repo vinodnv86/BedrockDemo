@@ -119,7 +119,7 @@ jobs:
         echo "Validation ID: $DEPLOY_ID"
 
          - name: Set DevOps Center target org
-        run: sf config set target-devops-center=devops-center-org
+        run: sf config set target-devops-center target-org
       
     # Quick Deploy using Validation ID
     - name: Deploy to Target Org
