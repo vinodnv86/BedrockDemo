@@ -45,3 +45,15 @@ jobs:
           --testlevel RunLocalTests \
           --targetusername githubOrg \
           --json
+
+
+    - name: 🗂 Deployment Status
+      run: sfdx force:source:deploy:report -u githubOrg
+
+    - name: 🚀 Real Deployment (optional - remove checkonly)
+      if: github.event_name == 'push'
+      run: |
+        echo "🚀 Performing real deployment (not checkonly)..."
+        sfdx force:source:deploy -p force-app \
+          --testlevel RunLocalTests \
+          --targetusername githubOrg
