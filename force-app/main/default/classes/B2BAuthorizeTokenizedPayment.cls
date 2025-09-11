@@ -8,8 +8,7 @@ public class B2BAuthorizeTokenizedPayment {
     /**
      * @description Authorizes payment for credit information that was previously tokenized. 
      * @param request The cart id.
-     * @return Any errors that occurred.
-     * Added Line 12
+     * @return Any errors that occurred. line13
      */
     @InvocableMethod(callout=true label='Authorize Tokenized Payment' description='Authorizes payment for credit information that was previously tokenized' category='B2B Commerce')
     public static List<String> authorizePaymentInfo(List<B2BAuthorizeTokenizedPaymentRequest> request) {

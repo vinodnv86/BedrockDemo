@@ -1,0 +1,67 @@
+name: Deploy to Salesforce on PR (Username-Password)
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: 20
+
+    - name: Install Salesforce CLI
+      run: npm install --global sfdx-cli
+
+    - name: Install Salesforce CLI Legacy Plugin (needed for password:login)
+      run: sfdx plugins:install salesforce-alm
+
+    - name: 📦 Checkout code
+      uses: actions/checkout@v4
+
+
+    - name: Authenticate to Salesforce (Username-Password)
+      run: |
+        sfdx force:auth:password:login \
+          --clientid ${{ secrets.CONSUMER_KEY }} \
+          --username ${{ secrets.SF_USERNAME }} \
+          --password ${{ secrets.SF_PASSWORD }} \
+          --instanceurl ${{ secrets.SF_SERVER_URL }} \
+          --setalias githubOrg \
+          --setdefaultusername
+      shell: bash
+
+    - name: Display Org Info (debug)
+      run: sfdx force:org:display -u githubOrg
+
+    - name: Validate Deployment (check only)
+      run: |
+        sfdx force:source:deploy -p force-app \
+          --checkonly \
+          --testlevel RunLocalTests \
+          --targetusername githubOrg \
+          --json
+
+
+    - name: 🗂 Deployment Status
+      run: sfdx force:source:deploy:report -u githubOrg
+
+      - name: 🚀 Deploy Metadata to Salesforce (real deploy)
+      run: |
+        echo "🚀 Deploying using sf CLI..."
+        sf project deploy start \
+          --source-dir force-app \
+          --target-org githubOrg \
+          --test-level RunLocalTests \
+          --wait 10
+
+    - name: ✅ Show Deployment Status
+      run: sf deploy report --target-org githubOrg
