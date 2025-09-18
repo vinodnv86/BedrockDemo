@@ -103,43 +103,14 @@ env:
         fi
 
     # Validate deployment (Check Only)
-    - name: Validate Deployment
-      id: validate_step # Assign an ID to this step to access its outputs
-      if: env.SKIP_DEPLOYMENT == 'false'
-      run: |
-        echo "Starting validation deployment..."
-        
-        # Run validation with test execution
-        VALIDATION_RESULT=$(sf project deploy validate \
-          --manifest delta/package/package.xml \
-          --target-org target-org \
-          --test-level RunLocalTests \
-          --wait 30 \
-          --json)
-
-        echo "Validation whole result : $VALIDATION_RESULT"
-        # Extract the 'id' field from the JSON output & Store the ID as a step output
-        DEPLOY_ID=$(echo "$VALIDATION_RESULT" | jq -r '.result.id')
-        echo "validation_id=$DEPLOY_ID" >> $GITHUB_OUTPUT
-        echo "Validation ID: $DEPLOY_ID"
-
-       # Validate deployment (Check Only)
+   
     - name: Validate Deployment
     run: |
           sf project convert source --output-dir mdapi
 
-    - name: Deploy MDAPI
-      run: |
+    - name: Deploy Deployment
+    run: |
           sf project deploy start --wait 10 --target-org target-org --deploy-dir mdapi --test-level RunLocalTests
 
       
-    # Quick Deploy using Validation ID
-    - name: Deploy to Target Org
-      if: success() && steps.validate_step.outputs.validation_id
-      run: |
-        echo "Starting quick deployment #  --job-id ${{ steps.validate_step.outputs.validation_id }} \using ID: ${{ steps.validate_step.outputs.validation_id }}"
-        sf project deploy quick  \
-          --use-most-recent \
-           --target-org target-org \
-           --wait 30 \
-           --verbose
+ 
