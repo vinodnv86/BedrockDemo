@@ -119,10 +119,14 @@ jobs:
         echo "validation_id=$DEPLOY_ID" >> $GITHUB_OUTPUT
         echo "Validation ID: $DEPLOY_ID"
 
-     #    - name: Set DevOps Center target org
-     #   run: sf config set target-devops-center target-org
+       # Validate deployment (Check Only)
+    - name: Validate Deployment
+    run: |
+          sf project convert source --output-dir mdapi
 
-    
+    - name: Deploy MDAPI
+      run: |
+          sf project deploy start --wait 10 --target-org target-org --deploy-dir mdapi --test-level RunLocalTests
 
       
     # Quick Deploy using Validation ID
