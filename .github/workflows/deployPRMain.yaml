@@ -120,7 +120,17 @@ jobs:
         echo "validation_id=$DEPLOY_ID" >> $GITHUB_OUTPUT
         echo "Validation ID: $DEPLOY_ID"
 
-
+    # Quick Deploy using Validation ID
+    - name: Deploy to Target Org
+      if: success() && steps.validate_step.outputs.validation_id
+      run: |
+        echo "Starting quick deployment #  --job-id ${{ steps.validate_step.outputs.validation_id }} \using ID: ${{ steps.validate_step.outputs.validation_id }}"
+        sf project deploy quick  \
+          --use-most-recent \
+           --target-org target-org \
+           --wait 30 \
+           --verbose
+           
       # Quick Deploy using Validation ID
     - name: Deploy mdapi
      run: |
