@@ -123,11 +123,7 @@ jobs:
      #   run: sf config set target-devops-center target-org
 
     
-     - name: Convert to MDAPI Format
-     run: |
-     sf project convert source -d mdapi
-    #Deploy to target deployment org and run unit tests
-          - sf project deploy start --wait 10 -d mdapi --target-org target-org
+
       
     # Quick Deploy using Validation ID
     - name: Deploy to Target Org
