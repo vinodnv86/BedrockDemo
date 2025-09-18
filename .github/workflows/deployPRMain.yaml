@@ -105,5 +105,5 @@ jobs:
           sf project deploy start \
             --wait 10 \
             --target-org target-org \
-            --deploy-dir mdapi \
+            --d mdapi \
             --test-level RunLocalTests
