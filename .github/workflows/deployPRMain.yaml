@@ -17,7 +17,7 @@ env:
 #  validate-deployment:
  #   runs-on: ubuntu-latest
     
- jobs:
+jobs:
   deploy:
     runs-on: ubuntu-latest
    
