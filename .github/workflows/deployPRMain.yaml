@@ -13,8 +13,12 @@ env:
   SF_DISABLE_APP_HUB: true
   #SF_LOG_LEVEL: INFO
 
-jobs:
-  validate-deployment:
+#jobs:
+#  validate-deployment:
+ #   runs-on: ubuntu-latest
+    
+  jobs:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
