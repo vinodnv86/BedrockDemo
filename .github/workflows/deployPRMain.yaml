@@ -13,13 +13,10 @@ env:
   SF_DISABLE_APP_HUB: true
   #SF_LOG_LEVEL: INFO
 
-#jobs:
-#  validate-deployment:
- #   runs-on: ubuntu-latest
-    
-  jobs:
-  deploy:
+jobs:
+  validate-deployment:
     runs-on: ubuntu-latest
+    
 
     steps:
     # Checkout the repository
@@ -123,13 +120,11 @@ env:
         echo "validation_id=$DEPLOY_ID" >> $GITHUB_OUTPUT
         echo "Validation ID: $DEPLOY_ID"
 
-    # Quick Deploy using Validation ID
-    - name: Deploy to Target Org
-      if: success() && steps.validate_step.outputs.validation_id
+
+      # Quick Deploy using Validation ID
+    - name: Deploy mdapi
+     run: |
+          sf project convert source --output-dir mdapi
+            - name: Deploy MDAPI
       run: |
-        echo "Starting quick deployment #  --job-id ${{ steps.validate_step.outputs.validation_id }} \using ID: ${{ steps.validate_step.outputs.validation_id }}"
-        sf project deploy quick  \
-          --use-most-recent \
-           --target-org target-org \
-           --wait 30 \
-           --verbose
+          sf project deploy start --wait 10 --target-org target-org --deploy-dir mdapi --test-level RunLocalTests
