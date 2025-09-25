@@ -18,5 +18,4 @@
     <tabs>BedrockCustomObject__c</tabs>
     <tabs>Bedrock_Deployment_Demo__c</tabs>
     <uiType>Lightning</uiType>
-    <utilityBar>Bedrock_Financial_UtilityBar</utilityBar>
 </CustomApplication>
