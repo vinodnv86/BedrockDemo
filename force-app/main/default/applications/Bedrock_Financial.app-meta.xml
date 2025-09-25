@@ -12,10 +12,8 @@
     <isOmniPinnedViewEnabled>false</isOmniPinnedViewEnabled>
     <label>Bedrock Financial</label>
     <navType>Standard</navType>
-    <tabs>blng__GLAccount__c</tabs>
     <tabs>standard-Contact</tabs>
     <tabs>standard-Opportunity</tabs>
-    <tabs>BedrockCustomObject__c</tabs>
     <tabs>Bedrock_Deployment_Demo__c</tabs>
     <uiType>Lightning</uiType>
 </CustomApplication>
