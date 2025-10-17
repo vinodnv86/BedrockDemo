@@ -1,0 +1,29 @@
+<template>
+    <lightning-card title="Account Contact Relationships" icon-name="standard:contact">
+        <div class="slds-p-horizontal_medium slds-m-bottom_small">
+            <lightning-combobox
+                name="sortBy"
+                label="Sort By"
+                value={sortBy}
+                placeholder="Select Sort Field"
+                options={sortOptions}
+                onchange={handleSortChange}>
+            </lightning-combobox>
+        </div>
+
+        <template if:true={hasContacts}>
+            <lightning-datatable
+                key-field="contactId"
+                data={contacts}
+                columns={columns}
+                hide-checkbox-column>
+            </lightning-datatable>
+        </template>
+
+        <template if:false={hasContacts}>
+            <p class="slds-p-horizontal_medium slds-text-color_weak">
+                No related contacts found.
+            </p>
+        </template>
+    </lightning-card>
+</template>
