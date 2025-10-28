@@ -1,0 +1,23 @@
+<template>
+    <lightning-card title={modalTitle} icon-name="utility:record">
+        <template if:true={modeView}>
+            <lightning-record-view-form record-id={recordId} object-api-name={objectApiName}>
+                <div class="slds-box slds-theme_default">
+                    <template for:each={fieldList} for:item="field">
+                        <lightning-output-field key={field} field-name={field}></lightning-output-field>
+                    </template>
+                </div>
+            </lightning-record-view-form>
+        </template>
+
+    <template if:true={modeEdit}>
+        <lightning-record-form
+            record-id={recordId}
+            object-api-name={objectApiName}
+            mode="edit"
+            fields={fieldList}
+            onsuccess={handleSuccess}>
+        </lightning-record-form>
+    </template>
+    </lightning-card>
+</template>

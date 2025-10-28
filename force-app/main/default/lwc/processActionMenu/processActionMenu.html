@@ -1,0 +1,51 @@
+<template>
+    <lightning-card title="Actions">
+        <div class="slds-p-around_small">
+            <template if:true={processItems}>
+                <lightning-button-menu
+                    alternative-text="Select an action"
+                    icon-name="utility:chevrondown"
+                    menu-alignment="right"
+                    onselect={handleMenuSelect}>
+                    <template for:each={processItems} for:item="item">
+                        <lightning-menu-item
+                            key={item.variationId}
+                            value={item.variationId}
+                            label={item.label}
+                            icon-name={item.iconName}>
+                        </lightning-menu-item>
+                    </template>
+                </lightning-button-menu>
+            </template>
+
+            <template if:true={error}>
+                <div class="slds-text-color_error">{error}</div>
+            </template>
+        </div>
+    </lightning-card>
+
+    <!-- Modal -->
+    <template if:true={showModal}>
+        <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <h2 class="slds-text-heading_medium">{modalTitle}</h2>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium">
+                    <c-dynamic-modal-host
+                       record-id={recordId}
+                        variation-id={selectedVariationId}
+                        modal-title={modalTitle}
+                        object-api-name={selectedObjectApiName}
+                        field-names={selectedFieldNames}
+                        onclose={handleModalClose}>
+                    </c-dynamic-modal-host>
+                </div>
+                <footer class="slds-modal__footer">
+                    <lightning-button label="Close" onclick={handleModalClose}></lightning-button>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+</template>

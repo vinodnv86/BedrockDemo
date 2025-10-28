@@ -1,0 +1,33 @@
+<template>
+    <template if:true={shouldShowModal}>
+        <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <!-- Modal Header -->
+                <header class="slds-modal__header">
+                    <h2 class="slds-modal__title">{modalTitle}</h2>
+                    <button class="slds-button slds-modal__close" title="Close" onclick={handleClose}>
+                        <lightning-icon icon-name="utility:close" alternative-text="Close" size="small"></lightning-icon>
+                    </button>
+                </header>
+
+                <!-- Modal Body: Load single dynamic component -->
+                <div class="slds-modal__content slds-p-around_medium">
+                    <c-dynamic-process-modal
+                        record-id={recordId}
+                        variation-id={variationId}
+                        modal-title={modalTitle}
+                        object-api-name={objectApiName}
+                        field-names={fieldNames}
+                        onclose={handleClose}>
+                    </c-dynamic-process-modal>
+                </div>
+
+                <!-- Modal Footer -->
+                <footer class="slds-modal__footer slds-grid slds-grid_align-end">
+                    <lightning-button label="Close" onclick={handleClose}></lightning-button>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+</template>

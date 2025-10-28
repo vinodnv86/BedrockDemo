@@ -1,0 +1,17 @@
+<apex:page renderAs="pdf" controller="ClientPlanPDFController" sidebar="false" showHeader="false">
+    <h1>Client Plan for {!account.Name}</h1>
+
+    <h2>Primary Contact</h2>
+    <p>{!contact.Name} - {!contact.Email} - {!contact.Phone}</p>
+
+    <h2>Opportunity Pipeline</h2>
+    <apex:repeat value="{!opportunities}" var="opp">
+        <p>• {!opp.Name} - {!opp.StageName} - {!opp.Amount}</p>
+    </apex:repeat>
+
+    <h2>Service Entitlements</h2>
+    <apex:repeat value="{!entitlements}" var="ent">
+        <p>• {!ent.Name} - {!ent.Status} - {!ent.EndDate}</p>
+    </apex:repeat>
+</apex:page>
+    
