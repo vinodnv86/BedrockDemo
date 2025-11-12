@@ -1,0 +1,17 @@
+<apex:page standardController="Account" renderAs="pdf" showHeader="false" sidebar="false">
+    <h1 style="color:#333;">Client Plan Report</h1>
+    <hr/>
+    <p><b>Account Name:</b> {!Account.Name}</p>
+    <p><b>Industry:</b> {!Account.Industry}</p>
+    <p><b>Annual Revenue:</b> {!TEXT(Account.AnnualRevenue)}</p>
+
+    <h3>Global Presence Map</h3>
+    <apex:image
+        url="/sfc/servlet.shepherd/version/download/{!$CurrentPage.parameters.imageId}"
+        width="600px"
+        alt="Client Map"/>
+
+    <p style="margin-top:20px; font-size:10pt; color:#777;">
+        Generated automatically on {!NOW()}
+    </p>
+</apex:page>
