@@ -1,0 +1,104 @@
+<template>
+    <lightning-card title="Object Actions">
+
+        <table class="slds-table slds-table_cell-buffer">
+            <thead>
+                <tr>
+                    <th>Object</th>
+                    <th>View</th>
+                    <th>Create</th>
+                    <th>Update</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <template for:each={rows} for:item="row">
+                    <tr key={row.api}>
+                        <td>{row.label}</td>
+
+                        <td>
+                            <template if:true={row.access.view}>
+                                <lightning-button label="View"
+                                    variant="brand-outline"
+                                    data-api={row.api}
+                                    data-action="view"
+                                    onclick={handleAction}>
+                                </lightning-button>
+                            </template>
+                        </td>
+
+                        <td>
+                            <template if:true={row.access.create}>
+                                <lightning-button label="Create"
+                                    variant="brand-outline"
+                                    data-api={row.api}
+                                    data-action="create"
+                                    onclick={handleAction}>
+                                </lightning-button>
+                            </template>
+                        </td>
+
+                        <td>
+                            <template if:true={row.access.update}>
+                                <lightning-button label="Update"
+                                    variant="brand-outline"
+                                    data-api={row.api}
+                                    data-action="update"
+                                    onclick={handleAction}>
+                                </lightning-button>
+                            </template>
+                        </td>
+                    </tr>
+                </template>
+            </tbody>
+        </table>
+
+        <!-- MODAL -->
+        <template if:true={showModal}>
+            <section class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+
+                    <header class="slds-modal__header">
+                        <h2 class="slds-text-heading_medium">{modalTitle}</h2>
+                    </header>
+
+                    <div class="slds-modal__content">
+
+                        <!-- HIERARCHY -->
+                        <template if:true={isHierarchy}>
+                            <c-hierarchy-viewer
+                                record-id={recordId}
+                                object-api-name={modalObjectApi}>
+                            </c-hierarchy-viewer>
+                        </template>
+
+                        <!-- RECORD FORM -->
+                        <template if:false={isHierarchy}>
+                            <lightning-record-edit-form
+                                object-api-name={modalObjectApi}
+                                record-id={modalRecordId}
+                                mode={formMode}>
+                                <template for:each={modalFields} for:item="fieldName">
+                                    <lightning-input-field key={fieldName} field-name={fieldName}></lightning-input-field>
+                                </template>
+
+                                <div class="slds-m-top_small">
+                                    <lightning-button variant="brand" type="submit" label="Save"></lightning-button>
+                                </div>
+                            </lightning-record-edit-form>
+                        </template>
+
+                    </div>
+
+                    <footer class="slds-modal__footer">
+                        <lightning-button label="Close" onclick={closeModal}></lightning-button>
+                    </footer>
+
+                </div>
+            </section>
+
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </template>
+
+    </lightning-card>
+</template>
