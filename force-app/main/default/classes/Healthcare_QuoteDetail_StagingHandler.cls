@@ -10,7 +10,7 @@ public class Healthcare_QuoteDetail_StagingHandler {
         }
         if (productExternalIds.isEmpty()) return;
 
-        // Query Product2 using its External ID field (replace External_ID__c with your actual API name)
+        
         Map<String, Id> externalIdToProductId = new Map<String, Id>();
         for (Product2 prod : [
             SELECT Id, External_ID__c
